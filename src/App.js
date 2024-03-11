@@ -2,6 +2,9 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function getVideoIdFromUrl(url) {
   // Kiểm tra xem url có phải là một chuỗi không
@@ -44,10 +47,11 @@ class App extends React.Component {
       }
     }
     ).then(response => {
-      console.log(response)
+      console.log(response.data.Message)
+      toast(response.data.Message)
     })
     .catch(error => {
-      console.log(error)
+      toast(error)
     });
   }
 
@@ -160,7 +164,7 @@ class App extends React.Component {
       <div>
         <input type="text" value={this.state.inputValue} onChange={this.handleInputChange.bind(this)} />
         <button onClick={this.logInputValue.bind(this)}>Log Input Value</button>
-
+        <ToastContainer />
         <GoogleLogin
           onSuccess={credentialResponse => {
             localStorage.setItem('token', credentialResponse.credential);
