@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import WebSocketComponent from './WebSocket';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -36,7 +34,7 @@ root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId="326313607776-macv5cle3gs1ehtb53rcm95je9rd3tlh.apps.googleusercontent.com">
       <RouterProvider router={router} />
-    </GoogleOAuthProvider>;
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );
 

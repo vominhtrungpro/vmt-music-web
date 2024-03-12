@@ -1,19 +1,18 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 function getVideoIdFromUrl(url) {
-  // Kiểm tra xem url có phải là một chuỗi không
   if (typeof url !== 'string') {
     console.error('URL must be a string');
     return null;
   }
 
   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+
   const match = url.match(regExp);
   if (match && match[7].length === 11) {
     return match[7];
@@ -32,30 +31,6 @@ class Main extends React.Component {
     };
   }
 
-  handleInputChange(event) {
-    this.setState({ inputValue: event.target.value });
-  }
-
-  logInputValue() {
-    const apiUrl = 'http://127.0.0.1:5000/api/insert_music';
-    const data = { url: this.state.inputValue };
-
-    axios.post(apiUrl, data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization:localStorage.getItem('token')
-      }
-    }
-    ).then(response => {
-      console.log(response.data.Message)
-      toast(response.data.Message)
-    })
-    .catch(error => {
-      toast(error)
-    });
-  }
-
-
   playVideoByUrl(url) {
     const videoId = getVideoIdFromUrl(url);
     if (this.state.player) {
@@ -63,9 +38,8 @@ class Main extends React.Component {
     }
   }
 
-
   componentDidMount() {
-    this.socket = new WebSocket('ws://127.0.0.1:8765');
+    this.socket = new WebSocket('ws://192.168.1.12:8765');
 
     this.socket.onopen = () => {
       console.log('WebSocket connected');
@@ -97,7 +71,7 @@ class Main extends React.Component {
   }
 
   connectWebSocket() {
-    const ws = new WebSocket('ws://127.0.0.1:8765');
+    const ws = new WebSocket('ws://192.168.1.12:8765');
 
     ws.onopen = () => {
       console.log('WebSocket connected');
