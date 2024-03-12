@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/vmt-music-web/static/css/main.3572f698.css",
+    "main.js": "/vmt-music-web/static/js/main.2d59704b.js",
+    "static/js/453.5a6c2f59.chunk.js": "/vmt-music-web/static/js/453.5a6c2f59.chunk.js",
+    "index.html": "/vmt-music-web/index.html",
+    "main.3572f698.css.map": "/vmt-music-web/static/css/main.3572f698.css.map",
+    "main.2d59704b.js.map": "/vmt-music-web/static/js/main.2d59704b.js.map",
+    "453.5a6c2f59.chunk.js.map": "/vmt-music-web/static/js/453.5a6c2f59.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3572f698.css",
+    "static/js/main.2d59704b.js"
+  ]
+}
