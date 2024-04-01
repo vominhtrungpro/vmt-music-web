@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'universal-cookie';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,12 +10,25 @@ class Request extends React.Component {
     super(props);
     this.state = {};
   }
-
+  
   handleInputChange(event) {
     this.setState({ inputValue: event.target.value });
   }
 
   logInputValue() {
+    const cookies = new Cookies();
+    const cookieValue = cookies.get('currentTimeCookie');
+    if (cookieValue) {
+      const createTime = new Date(cookieValue);
+      const currentTime = new Date();
+      const differenceInMinutes = (currentTime - createTime) / (1000 * 60);
+      console.log(differenceInMinutes)
+      if (differenceInMinutes < 5) {
+        toast('Request limit');
+        return;
+      }
+    }
+
     const apiUrl = 'http://192.168.1.12:5000/api/insert_music';
     const data = { url: this.state.inputValue };
 
@@ -27,12 +41,18 @@ class Request extends React.Component {
     ).then(response => {
       console.log(response.data.Message)
       toast(response.data.Message)
+      if(response.data.Message === 'Success')
+      {
+        const currentTime = new Date();
+        const formattedTime = currentTime.toISOString();
+        cookies.set('currentTimeCookie', formattedTime, { path: '/', maxAge: 60 * 5 });
+      }
     })
     .catch(error => {
         if (error.response && error.response.status === 401) {
           toast('Unauthorized')
         } else {
-          toast('An error occurred. Please try again later.');
+          toast('An error occurred. Please try again later.')
         }
       });
   }
